@@ -1,40 +1,27 @@
 import 'package:flutter/material.dart';
+import 'screens/blog_list_screen.dart';
+import 'services/api_service.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(const DobovkyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class DobovkyApp extends StatelessWidget {
+  const DobovkyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // ApiService is created once and passed down to screens that need it.
+    final apiService = ApiService();
+
     return MaterialApp(
       title: 'Dobovky Blog',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        useMaterial3: true,
       ),
-      home: const BlogHomePage(),
-    );
-  }
-}
-
-class BlogHomePage extends StatefulWidget {
-  const BlogHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<BlogHomePage> createState() => _BlogHomePageState();
-}
-
-class _BlogHomePageState extends State<BlogHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dobovky'),
-      ),
-      body: Center(
-        child: Text('Blog App'),
-      ),
+      home: BlogListScreen(apiService: apiService),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
